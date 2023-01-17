@@ -9,7 +9,7 @@ void interprete_run(vector<IR> &ir);
 int main(int argc, const char *argv[])
 {
     if(argc == 1)
-        cout << "usega: jit [-i] filePath" << endl;
+        cout << "usage: jit [-i] filePath" << endl;
     else
     {
         const char *path = argc == 2 ? argv[1] : argv[2];
@@ -27,7 +27,7 @@ int main(int argc, const char *argv[])
         else if(argc == 3 && string(argv[1]) == "-i")
             interprete_run(ir);
         else 
-            cout << "usega: jit [-i] filePath" << endl;
+            cout << "usage: jit [-i] filePath" << endl;
         fin.close();
     }
 }

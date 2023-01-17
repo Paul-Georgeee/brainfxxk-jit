@@ -132,16 +132,15 @@ void jit_run(vector<IR> &ir)
     FILE *fp = fopen("bfcode.bin", "wb");
     fwrite(codes.data(), codes.size(), 1, fp);
     fclose(fp);
+    //use "objdump -D -b binary -mi386 -Mx86-64 bfcode.bin > bfcode.dump" to see the assemble code 
 #endif
 
     size_t size = codes.size();
-    void *bf = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+    void *bf = mmap(NULL, size, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_ANON | MAP_PRIVATE, -1, 0);
     assert(bf != MAP_FAILED);
     memcpy(bf, codes.data(), codes.size());
 
-
-    assert(mprotect(bf, size, PROT_EXEC | PROT_READ) == 0);
-
 	((void (*)())bf)();
+    
     assert(munmap(bf, size) == 0);
 }
